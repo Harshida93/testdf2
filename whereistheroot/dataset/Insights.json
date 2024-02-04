@@ -1,0 +1,20 @@
+{
+	"name": "Insights",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "resourceId=/SUBSCRIPTIONS/4E2012BC-5D83-45BD-BB9B-3526FA0377E8/RESOURCEGROUPS/DP203/PROVIDERS/MICROSOFT.WEB/SITES/DP203WEBAPPP1126/y=2023",
+				"fileSystem": "insights-metrics-pt1m"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

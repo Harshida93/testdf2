@@ -1,0 +1,98 @@
+{
+	"name": "DimCustomer",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Customer2",
+						"type": "DatasetReference"
+					},
+					"name": "DimCustomer"
+				},
+				{
+					"dataset": {
+						"referenceName": "poolDimCustomerTable",
+						"type": "DatasetReference"
+					},
+					"name": "CustomerSKMax"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "poolDimCustomerTable",
+						"type": "DatasetReference"
+					},
+					"name": "PoolDimCustomer"
+				},
+				{
+					"name": "CustomerSKSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CustomerSK"
+				},
+				{
+					"name": "CustomerSKupdated"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     ignoreNoFilesFound: false) ~> DimCustomer",
+				"source(output(",
+				"          CustomerSKMax as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'Select MAX([CustomerSK]) CustomerSKMax from dbo.DimCustomerTable ',",
+				"     format: 'query',",
+				"     staged: true) ~> CustomerSKMax",
+				"DimCustomer keyGenerate(output(CustomerSK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> CustomerSK",
+				"CustomerSK derive(CustomerSK = CustomerSK+CustomerSKSink#outputs()[1].CustomerSKMax) ~> CustomerSKupdated",
+				"CustomerSKupdated sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerSK as integer,",
+				"          CustomerID as integer,",
+				"          CompanyName as string,",
+				"          SalesPerson as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CustomerSK,",
+				"          CustomerID,",
+				"          CompanyName,",
+				"          SalesPerson",
+				"     )) ~> PoolDimCustomer",
+				"CustomerSKMax sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> CustomerSKSink"
+			]
+		}
+	}
+}

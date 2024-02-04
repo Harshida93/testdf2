@@ -1,0 +1,64 @@
+{
+	"name": "pool_parquetDLtoPoolDb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ToPoolDb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "Correlation id",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "Operation name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Event category",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Level",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Subscription",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "Event initiated by",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resource type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resource group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resource",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "logData_regular"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

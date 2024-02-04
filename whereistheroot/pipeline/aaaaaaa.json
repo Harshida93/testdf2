@@ -1,0 +1,29 @@
+{
+	"name": "aaaaaaa",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"parameters": {
+			"sch": {
+				"type": "string",
+				"defaultValue": "@trigger().scheduledTime"
+			},
+			"start": {
+				"type": "string",
+				"defaultValue": "@trigger().startTime"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-02-04T12:45:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

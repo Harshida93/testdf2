@@ -1,0 +1,70 @@
+{
+	"name": "StagingtoTable",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "stagingtoInput",
+						"type": "DatasetReference"
+					},
+					"name": "StagingtoTable"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "WebMetricTable",
+						"type": "DatasetReference"
+					},
+					"name": "Table"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          total as integer,",
+				"          minimum as integer,",
+				"          maximum as integer,",
+				"          average as integer,",
+				"          resourceId as string,",
+				"          time as string,",
+				"          metricName as string,",
+				"          timeGrain as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     purgeFiles: true,",
+				"     documentForm: 'documentPerLine') ~> StagingtoTable",
+				"StagingtoTable select(mapColumn(",
+				"          Average = average,",
+				"          Metrictime = time,",
+				"          MetricName = metricName",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Average as decimal(18,0),",
+				"          Metrictime as timestamp,",
+				"          MetricName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> Table"
+			]
+		}
+	}
+}

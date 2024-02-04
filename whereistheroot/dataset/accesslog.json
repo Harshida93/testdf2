@@ -1,0 +1,30 @@
+{
+	"name": "accesslog",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Source_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "accesslog.rtf",
+				"fileSystem": "csv"
+			},
+			"columnDelimiter": ",",
+			"rowDelimiter": "\n",
+			"escapeChar": "/",
+			"firstRowAsHeader": false,
+			"quoteChar": null
+		},
+		"schema": [
+			{
+				"name": "{\\rtf1\\ansi\\ansicpg1252\\cocoartf2639",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "StorageEventTest",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Trigger",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/stagingmetricnew/blobs/",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/4e2012bc-5d83-45bd-bb9b-3526fa0377e8/resourceGroups/dp203/providers/Microsoft.Storage/storageAccounts/adp203zsynapsesa",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,180 @@
+{
+	"name": "CopyPolybase_DLtoPool",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyUinsgPolybase",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowPolyBase": true,
+						"polyBaseSettings": {
+							"rejectValue": 0,
+							"rejectType": "value",
+							"useTypeDefault": true
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "Source_DataLake",
+							"type": "LinkedServiceReference"
+						},
+						"path": "csv"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Correlation id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Correlation id",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "Operation name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Operation name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Event category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Event category",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Level",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Level",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Time",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Time",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "Subscription",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Subscription",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "Event initiated by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Event initiated by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Resource type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Resource type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Resource group",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Resource group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Resource",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Resource",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "pool_parquetDLtoPoolDb",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-11-25T18:23:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

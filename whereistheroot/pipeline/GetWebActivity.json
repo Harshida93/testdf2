@@ -1,0 +1,29 @@
+{
+	"name": "GetWebActivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 5,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://adp203zsynapsesa.blob.core.windows.net/csv/Customer1.xlsx"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-11-26T15:33:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

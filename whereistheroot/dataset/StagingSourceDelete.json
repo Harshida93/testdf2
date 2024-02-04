@@ -1,0 +1,19 @@
+{
+	"name": "StagingSourceDelete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "*.json",
+				"fileSystem": "stagingmetricnew"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

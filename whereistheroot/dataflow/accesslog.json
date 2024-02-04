@@ -1,0 +1,62 @@
+{
+	"name": "accesslog",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "accesslog",
+						"type": "DatasetReference"
+					},
+					"name": "accesslog"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "outputaccesslog"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {{\\rtf1\\ansi\\ansicpg1252\\cocoartf2639} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> accesslog",
+				"accesslog derive({{\\rtf1\\ansi\\ansicpg1252\\cocoartf2639} = substring({{\\rtf1\\ansi\\ansicpg1252\\cocoartf2639}, 2, length({{\\rtf1\\ansi\\ansicpg1252\\cocoartf2639})-2)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Correlation id} as string,",
+				"          {Operation name} as string,",
+				"          Status as string,",
+				"          {Event category} as string,",
+				"          Level as string,",
+				"          Time as string,",
+				"          Subscription as string,",
+				"          {Event initiated by} as string,",
+				"          {Resource type} as string,",
+				"          {Resource group} as string,",
+				"          Resource as string",
+				"     ),",
+				"     partitionFileNames:['accesslogoutput'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> outputaccesslog"
+			]
+		}
+	}
+}

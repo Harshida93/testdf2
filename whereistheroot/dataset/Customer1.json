@@ -1,0 +1,35 @@
+{
+	"name": "Customer1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Source_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Customer1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Customer1.xlsx",
+				"fileSystem": "csv"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "String"
+			},
+			{
+				"name": "CompanyName",
+				"type": "String"
+			},
+			{
+				"name": "SalesPerson",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

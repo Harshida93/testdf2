@@ -1,0 +1,36 @@
+{
+	"name": "PoolDimCustomer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ToPoolDb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "CustomerSK",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CompanyName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SalesPerson",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DimCustomerTable"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

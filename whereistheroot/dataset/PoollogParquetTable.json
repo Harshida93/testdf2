@@ -1,0 +1,17 @@
+{
+	"name": "PoollogParquetTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ToPoolDb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "logData_regular_parquet"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
